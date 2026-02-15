@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Apply for {{ job.title }} - Alexa{% endblock %}
+
+{% block content %}
+<div class="apply-page">
+    <div class="job-info">
+        <h1>{{ job.title }}</h1>
+        <p><i class="fas fa-map-marker-alt"></i> {{ job.location }}</p>
+    </div>
+
+    <div class="form-container">
+        <h2><i class="fas fa-file-upload"></i> Submit Your Application</h2>
+        
+        <form method="post" enctype="multipart/form-data" id="applicationForm">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="resumeInput">
+                    <i class="fas fa-file-pdf"></i> Upload Your Resume
+                </label>
+                <div class="upload-section">
+                    <div class="file-input-wrapper">
+                        <input type="file" id="resumeInput" name="resume" accept=".pdf,.doc,.docx" required onchange="updateFileName(this)">
+                        <label for="resumeInput" class="file-input-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Click to upload or drag and drop</span>
+                        </label>
+                    </div>
+                    <p class="file-name" id="fileName" style="display: none;"></p>
+                    <p style="color: #999; font-size: 0.85rem; margin-top: 0.5rem;">Supported formats: PDF, DOC, DOCX (Max 10MB)</p>
+                </div>
+            </div>
+
+            <div class="form-group" style="background-color: #f0f4f8; padding: 1rem; border-radius: 5px; margin-top: 1.5rem;">
+                <h4 style="margin-bottom: 0.5rem;"><i class="fas fa-info-circle"></i> Job Description</h4>
+                <p style="margin: 0; color: #666;">{{ job.description }}</p>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Submit Application
+                </button>
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+function updateFileName(input) {
+    const fileNameElement = document.getElementById('fileName');
+    if (input.files && input.files[0]) {
+        fileNameElement.textContent = 'Selected: ' + input.files[0].name;
+        fileNameElement.style.display = 'block';
+    }
+}
+</script>
+{% endblock %}

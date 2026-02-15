@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Job Listings - Alexa{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Find Your Dream Job</h1>
+    <p>Explore thousands of job opportunities with all the information you need</p>
+</div>
+
+<div class="jobs-container">
+    <div class="jobs-header">
+        <h2><i class="fas fa-briefcase"></i> Available Positions</h2>
+    </div>
+
+    {% if jobs %}
+        <div class="jobs-list">
+            {% for job in jobs %}
+            <div class="job-card">
+                <div class="job-card-header">
+                    <h3 class="job-title">{{ job.title }}</h3>
+                    <div class="job-meta">
+                        <span class="job-location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ job.location }}
+                        </span>
+                    </div>
+                </div>
+                
+                <p class="job-description">{{ job.description|truncatewords:30 }}</p>
+                
+                <div class="job-card-footer">
+                    <span class="badge badge-primary">
+                        <i class="fas fa-clock"></i> Recently Posted
+                    </span>
+                    <a href="/apply/{{ job.id }}/" class="apply-link">
+                        <i class="fas fa-arrow-right"></i> Apply Now
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h3>No jobs available</h3>
+            <p>Check back later for new opportunities!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

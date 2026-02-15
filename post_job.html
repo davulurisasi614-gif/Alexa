@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Post a Job - Alexa{% endblock %}
+
+{% block content %}
+<div class="post-job-header">
+    <h2><i class="fas fa-briefcase"></i> Post a New Job</h2>
+    <p>Fill in the details below to post your job listing</p>
+</div>
+
+<div class="form-container">
+    <form method="post" id="postJobForm">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="jobTitle">
+                <i class="fas fa-heading"></i> Job Title
+            </label>
+            <input 
+                type="text" 
+                id="jobTitle"
+                name="title" 
+                placeholder="e.g., Senior Python Developer" 
+                required
+                autocomplete="off">
+            <small style="color: #999; display: block; margin-top: 0.3rem;">Enter the position you're hiring for</small>
+        </div>
+
+        <div class="form-group">
+            <label for="jobLocation">
+                <i class="fas fa-map-marker-alt"></i> Location
+            </label>
+            <input 
+                type="text" 
+                id="jobLocation"
+                name="location" 
+                placeholder="e.g., New York, NY or Remote" 
+                required
+                autocomplete="off">
+            <small style="color: #999; display: block; margin-top: 0.3rem;">Where is this position based?</small>
+        </div>
+
+        <div class="form-group">
+            <label for="jobDescription">
+                <i class="fas fa-file-alt"></i> Job Description
+            </label>
+            <textarea 
+                id="jobDescription"
+                name="description" 
+                placeholder="Describe the job responsibilities, required skills, qualifications, and any other important details..."
+                required></textarea>
+            <small style="color: #999; display: block; margin-top: 0.3rem;">Be detailed to attract the right candidates</small>
+        </div>
+
+        <div style="background-color: #e8f4f8; padding: 1rem; border-radius: 5px; margin: 1.5rem 0; border-left: 4px solid var(--primary-color);">
+            <p style="margin: 0; font-size: 0.9rem; color: #0652a3;">
+                <i class="fas fa-lightbulb"></i> <strong>Tip:</strong> Include salary range, benefits, and application deadline to get more qualified applicants.
+            </p>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Post Job
+            </button>
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.getElementById('postJobForm').addEventListener('submit', function(e) {
+    const title = document.getElementById('jobTitle').value.trim();
+    const location = document.getElementById('jobLocation').value.trim();
+    const description = document.getElementById('jobDescription').value.trim();
+    
+    if (!title || !location || !description) {
+        e.preventDefault();
+        alert('Please fill in all required fields');
+    }
+});
+</script>
+{% endblock %}
